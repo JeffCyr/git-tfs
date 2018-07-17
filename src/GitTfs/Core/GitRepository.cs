@@ -186,11 +186,8 @@ namespace GitTfs.Core
             if (HasRemote(remote.Id))
                 throw new GitTfsException("A remote with id \"" + remote.Id + "\" already exists.");
 
-            // The autocrlf default (as indicated by a null) is false and is set to override the system-wide setting.
-            // When creating branches we use the empty string to indicate that we do not want to set the value at all.
-            if (autocrlf == null)
-                autocrlf = "false";
-            if (autocrlf != string.Empty)
+            // Set autocrlf only if overriden, otherwise global will be used
+            if (!string.IsNullOrEmpty(autocrlf))
                 _repository.Config.Set("core.autocrlf", autocrlf);
 
             if (ignorecase != null)
@@ -542,7 +539,7 @@ namespace GitTfs.Core
             if (!destination.Directory.Exists)
                 destination.Directory.Create();
             if ((blob = _repository.Lookup<Blob>(sha)) != null)
-                using (Stream stream = blob.GetContentStream())
+                using (Stream stream = blob.GetContentStream(new FilteringOptions(string.Empty)))
                 using (var outstream = File.Create(destination.FullName))
                     stream.CopyTo(outstream);
         }

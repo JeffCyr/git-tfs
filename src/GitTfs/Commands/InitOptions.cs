@@ -7,10 +7,6 @@ namespace GitTfs.Commands
     [StructureMapSingleton]
     public class InitOptions
     {
-        private const string DefaultAutocrlf = "false";
-
-        public InitOptions() { GitInitAutoCrlf = DefaultAutocrlf; }
-
         public OptionSet OptionSet
         {
             get
@@ -21,7 +17,7 @@ namespace GitTfs.Commands
                         v => GitInitTemplate = v },
                     { "shared:", "Passed to git-init",
                         v => GitInitShared = v == null ? (object)true : (object)v },
-                    { "autocrlf=", "Normalize line endings (default: " + DefaultAutocrlf + ")",
+                    { "autocrlf=", "Normalize line endings (default: system default)",
                         v => GitInitAutoCrlf = ValidateCrlfValue(v) },
                     { "ignorecase=", "Ignore case in file paths (default: system default)",
                         v => GitInitIgnoreCase = ValidateIgnoreCaseValue(v) },

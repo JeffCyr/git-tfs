@@ -19,7 +19,7 @@ namespace GitTfs.Test.Commands
         [Fact]
         public void AutoCrlfDefault()
         {
-            Assert.Equal("false", mocks.ClassUnderTest.GitInitAutoCrlf);
+            Assert.Null(mocks.ClassUnderTest.GitInitAutoCrlf);
         }
 
         [Fact]
@@ -51,7 +51,7 @@ namespace GitTfs.Test.Commands
         {
             string[] args = { "init", "--autocrlf=windows", "http://example.com/tfs", "$/Junk" };
             Assert.Throws<OptionException>(() => mocks.ClassUnderTest.OptionSet.Parse(args));
-            Assert.Equal("false", mocks.ClassUnderTest.GitInitAutoCrlf);
+            Assert.Null(mocks.ClassUnderTest.GitInitAutoCrlf);
         }
 
         [Fact]
@@ -59,7 +59,7 @@ namespace GitTfs.Test.Commands
         {
             string[] args = { "init", "--autocrlf", "http://example.com/tfs", "$/Junk" };
             Assert.Throws<OptionException>(() => mocks.ClassUnderTest.OptionSet.Parse(args));
-            Assert.Equal("false", mocks.ClassUnderTest.GitInitAutoCrlf);
+            Assert.Null(mocks.ClassUnderTest.GitInitAutoCrlf);
         }
 
         #endregion
